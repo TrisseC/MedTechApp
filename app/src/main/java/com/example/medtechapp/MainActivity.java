@@ -17,4 +17,19 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, Motion.class);
         startActivity(intent);
     }
+
+    public void openHighscores(View view){
+        Intent intent = new Intent(this, Highscores.class);
+        startActivity(intent);
+    }
+
+    public void openVisual(View view){
+        Intent intent = new Intent(this, Visual.class);
+        startActivity(intent);
+    }
+
+    public void openSound(View view){
+        Intent intent = new Intent(this, Sound.class);
+        startActivity(intent);
+    }
 }
