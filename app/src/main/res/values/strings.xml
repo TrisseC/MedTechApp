@@ -4,4 +4,7 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="movement_text">Rörelse</string>
+    <string name="visual_text">Visuellt</string>
+    <string name="audial_text">Hörsel</string>
+    <string name="hs_text">Highscores</string>
 </resources>

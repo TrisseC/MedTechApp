@@ -10,7 +10,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MedTechApp">
         <activity
-            android:name=".MainActivity2"
+            android:name=".Sound"
+            android:exported="false" />
+        <activity
+            android:name=".Visual"
+            android:exported="false" />
+        <activity
+            android:name=".Highscores"
+            android:exported="false" />
+        <activity
+            android:name=".Motion"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
