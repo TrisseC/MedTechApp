@@ -14,7 +14,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void openMoveActivity(View view){
-        Intent intent = new Intent(this, MainActivity2.class);
+        Intent intent = new Intent(this, Motion.class);
         startActivity(intent);
     }
 }
