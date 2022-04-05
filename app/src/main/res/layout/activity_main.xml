@@ -20,7 +20,7 @@
         android:id="@+id/button"
         android:layout_width="207dp"
         android:layout_height="54dp"
-        android:text="HIGHSCORES"
+        android:text="@string/hs_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -41,7 +41,7 @@
             android:id="@+id/button5"
             android:layout_width="match_parent"
             android:layout_height="90dp"
-            android:text="Visuellt"
+            android:text="@string/visual_text"
             android:textSize="24sp" />
 
         <Button
@@ -51,13 +51,14 @@
             android:onClick="openMoveActivity"
             android:text="@string/movement_text"
             android:textAlignment="center"
-            android:textSize="24sp" />
+            android:textSize="24sp"
+            tools:ignore="UsingOnClickInXml" />
 
         <Button
             android:id="@+id/button2"
             android:layout_width="match_parent"
             android:layout_height="90dp"
-            android:text="Hörsel"
+            android:text="@string/audial_text"
             android:textSize="24sp" />
 
     </LinearLayout>
