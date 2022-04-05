@@ -25,7 +25,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="UsingOnClickInXml" />
 
     <LinearLayout
         android:id="@+id/top"
@@ -44,7 +45,8 @@
             android:layout_height="90dp"
             android:text="@string/visual_text"
             android:onClick="openVisual"
-            android:textSize="24sp" />
+            android:textSize="24sp"
+            tools:ignore="UsingOnClickInXml" />
 
         <Button
             android:id="@+id/moveButton"
@@ -62,7 +64,8 @@
             android:layout_height="90dp"
             android:text="@string/audial_text"
             android:onClick="openSound"
-            android:textSize="24sp" />
+            android:textSize="24sp"
+            tools:ignore="UsingOnClickInXml" />
 
     </LinearLayout>
 
