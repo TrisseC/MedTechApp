@@ -8,4 +8,6 @@
     <string name="audial_text">Hörsel</string>
     <string name="hs_text">Highscores</string>
     <string name="react_text">Tryck på skärmen när bakgrunden blir grön. Tryck på knappen för att starta!</string>
+    <string name="soundReact_text">Tryck på skärmen när du hör ljudet. Tryck på knappen för att starta!</string>
+    <string name="continue_text">Klicka för att fortsätta</string>
 </resources>
