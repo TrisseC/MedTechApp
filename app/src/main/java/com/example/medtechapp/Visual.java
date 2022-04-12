@@ -26,13 +26,14 @@ public class Visual extends AppCompatActivity {
         random = new Random();
         View someView = findViewById(R.id.screen);
         root = someView.getRootView();
-        maxSecondsWait = 5; //Sets max value of how long you should wait for colour to turn green;
+        maxSecondsWait = 3; //Sets max value of how long you should wait for colour to turn green;
     }
 
     public void startTest(View view){
         long timeTaken;
         view.setVisibility(View.INVISIBLE);
-        long timer = (long) (random.nextDouble() * 1000.0 * maxSecondsWait);
+        findViewById(R.id.visualStartText).setVisibility(View.INVISIBLE);
+        long timer = (long) (500.0+(random.nextDouble() * 1000.0 * maxSecondsWait));
         root.setBackgroundColor(ContextCompat.getColor(this, android.R.color.holo_red_dark));
         handler.postDelayed(new Runnable() {
             public void run() {
