@@ -13,23 +13,26 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-    public void openMoveActivity(View view){
-        Intent intent = new Intent(this, Motion.class);
-        startActivity(intent);
-    }
-
     public void openHighscores(View view){
         Intent intent = new Intent(this, Highscores.class);
         startActivity(intent);
     }
 
+    public void openVibration(View view){
+        Intent intent = new Intent(this, TouchReaction.class);
+        intent.putExtra("state", "vibration");
+        startActivity(intent);
+    }
+
     public void openVisual(View view){
-        Intent intent = new Intent(this, Visual.class);
+        Intent intent = new Intent(this, TouchReaction.class);
+        intent.putExtra("state", "visual");
         startActivity(intent);
     }
 
     public void openSound(View view){
-        Intent intent = new Intent(this, Sound.class);
+        Intent intent = new Intent(this, TouchReaction.class);
+        intent.putExtra("state", "sound");
         startActivity(intent);
     }
 }

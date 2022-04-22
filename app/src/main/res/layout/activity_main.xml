@@ -52,8 +52,8 @@
             android:id="@+id/moveButton"
             android:layout_width="match_parent"
             android:layout_height="90dp"
-            android:onClick="openMoveActivity"
-            android:text="@string/movement_text"
+            android:onClick="openVibration"
+            android:text="@string/vibration_text"
             android:textAlignment="center"
             android:textSize="24sp"
             tools:ignore="UsingOnClickInXml" />

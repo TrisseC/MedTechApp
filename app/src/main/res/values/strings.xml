@@ -10,4 +10,7 @@
     <string name="react_text">Tryck på skärmen när bakgrunden blir grön. Tryck på knappen för att starta!</string>
     <string name="soundReact_text">Tryck på skärmen när du hör ljudet. Tryck på knappen för att starta!</string>
     <string name="continue_text">Klicka för att fortsätta</string>
+    <string name="too_fast_text">Du klickade för fort, försök igen</string>
+    <string name="vibration_text">Vibration</string>
+    <string name="start_test_text">Starta testet</string>
 </resources>

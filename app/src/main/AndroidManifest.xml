@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.medtechapp">
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:allowBackup="true"
@@ -10,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MedTechApp">
         <activity
-            android:name=".Sound"
+            android:name=".TouchReaction"
             android:exported="false" />
         <activity
             android:name=".Visual"
@@ -19,7 +20,7 @@
             android:name=".Highscores"
             android:exported="false" />
         <activity
-            android:name=".Motion"
+            android:name=".MotionReaction"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
