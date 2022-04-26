@@ -45,6 +45,9 @@ public class TouchReaction extends AppCompatActivity {
     }
 
     public void startTest(View view) {
+        final MediaPlayer tapSound = MediaPlayer.create(this, R.raw.go);
+        tapSound.start();
+
         hasCalled = false;
         paused = false;
 
@@ -61,8 +64,8 @@ public class TouchReaction extends AppCompatActivity {
         startTime = System.currentTimeMillis();
 
         if (state.equals("sound")) {
-            final MediaPlayer mp = MediaPlayer.create(this, R.raw.bruh);
-            mp.start();
+            final MediaPlayer testSound = MediaPlayer.create(this, R.raw.notice);
+            testSound.start();
         } else if (state.equals("vibration")) {
             vibrator.vibrate(250);
         } else if (state.equals("visual")){
@@ -117,4 +120,12 @@ public class TouchReaction extends AppCompatActivity {
         findViewById(R.id.timer).setVisibility(View.INVISIBLE);
         findViewById(R.id.tooFastText).setVisibility(View.INVISIBLE);
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        MediaPlayer backSound = MediaPlayer.create(this, R.raw.back);
+        backSound.start();
+    }
+
 }
