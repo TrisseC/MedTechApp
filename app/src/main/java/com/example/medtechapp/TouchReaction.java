@@ -7,6 +7,7 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
+import android.util.Log;
 import android.view.View;
 import android.widget.*;
 
@@ -65,7 +66,10 @@ public class TouchReaction extends AppCompatActivity {
 
         if (state.equals("sound")) {
             final MediaPlayer testSound = MediaPlayer.create(this, R.raw.notice);
+            testSound.setVolume(1,1);
             testSound.start();
+            Log.w("Audio Test","Duration: "+testSound.getDuration());
+            //startTime = System.currentTimeMillis();
         } else if (state.equals("vibration")) {
             vibrator.vibrate(250);
         } else if (state.equals("visual")){
