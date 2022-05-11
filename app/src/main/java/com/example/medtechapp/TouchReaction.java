@@ -28,8 +28,8 @@ public class TouchReaction extends AppCompatActivity {
 
     //final variables
     final private int rounds = 5;
-    final private double maxWait = 3000.0;
-    final private double minWait = 500.0;
+    final private double maxWait = 3500.0;
+    final private double minWait = 1000.0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +43,16 @@ public class TouchReaction extends AppCompatActivity {
 
         findViewById(R.id.timer).setVisibility(View.INVISIBLE);
         findViewById(R.id.tooFastText).setVisibility(View.INVISIBLE);
+
+        TextView instructions = findViewById(R.id.instructionText);
+        if (state.equals("sound")) {
+            instructions.setText("När du hör en signal, tryck så snabbt du kan." +
+                    "\n Kom ihåg att höja volymen på mobilen");
+        } else if (state.equals("vibration")) {
+            instructions.setText("När du känner en vibration, tryck så snabbt du kan.");
+        } else if (state.equals("visual")){
+            instructions.setText("När den röda skärmen blir grön, tryck så snabbt du kan.");
+        }
     }
 
     public void startTest(View view) {
@@ -118,7 +128,11 @@ public class TouchReaction extends AppCompatActivity {
         }
         averageReactionTime /= rounds;
 
-        //skicka till highscores och stäng ner
+        TextView instructions = findViewById(R.id.instructionText);
+        instructions.setText("Bra jobbat!\nKlicka på tillbakapilen för att gå till menyn");
+        findViewById(R.id.instructionText).setVisibility(View.VISIBLE);
+
+        //skicka till highscores
         TextView timerTV = findViewById(R.id.timer);
         timerTV.setVisibility(View.VISIBLE);
         timerTV.setText("Genomsnitt: " + Long.toString(averageReactionTime) + "ms");
@@ -128,6 +142,7 @@ public class TouchReaction extends AppCompatActivity {
         findViewById(R.id.continueBtn).setVisibility(View.INVISIBLE);
         findViewById(R.id.timer).setVisibility(View.INVISIBLE);
         findViewById(R.id.tooFastText).setVisibility(View.INVISIBLE);
+        findViewById(R.id.instructionText).setVisibility(View.INVISIBLE);
     }
 
     @Override
