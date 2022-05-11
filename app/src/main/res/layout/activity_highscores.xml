@@ -6,4 +6,112 @@
     android:layout_height="match_parent"
     tools:context=".Highscores">
 
+    <LinearLayout
+        android:id="@+id/ljudLayout"
+        android:layout_width="100dp"
+        android:layout_height="600dp"
+        android:layout_marginTop="30dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toStartOf="@+id/vibLayout"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/visLayout"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/ljudScoresText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Ljud"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/ljudScores"
+            android:layout_width="match_parent"
+            android:layout_height="557dp"
+            android:text="   1. test"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/visLayout"
+        android:layout_width="100dp"
+        android:layout_height="600dp"
+        android:layout_marginTop="30dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toStartOf="@+id/ljudLayout"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/visualScoreText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Visuellt"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/visScores"
+            android:layout_width="match_parent"
+            android:layout_height="557dp"
+            android:text="1. test"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/moveLayout"
+        android:layout_width="100dp"
+        android:layout_height="600dp"
+        android:layout_marginTop="30dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/vibLayout"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/movementScoresText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Rörelse"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/moveScores"
+            android:layout_width="match_parent"
+            android:layout_height="557dp"
+            android:text="1. test"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/vibLayout"
+        android:layout_width="100dp"
+        android:layout_height="600dp"
+        android:layout_marginTop="30dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toStartOf="@+id/moveLayout"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/ljudLayout"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/vibrationScoresText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Vibration"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/vibScores"
+            android:layout_width="match_parent"
+            android:layout_height="557dp"
+            android:text="1. test"
+            android:textSize="16sp" />
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

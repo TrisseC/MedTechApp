@@ -3,16 +3,20 @@ package com.example.medtechapp;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 
 public class TouchReaction extends AppCompatActivity {
     private Handler handler;
@@ -132,10 +136,13 @@ public class TouchReaction extends AppCompatActivity {
         instructions.setText("Bra jobbat!\nKlicka på tillbakapilen för att gå till menyn");
         findViewById(R.id.instructionText).setVisibility(View.VISIBLE);
 
-        //skicka till highscores
+
         TextView timerTV = findViewById(R.id.timer);
         timerTV.setVisibility(View.VISIBLE);
         timerTV.setText("Genomsnitt: " + Long.toString(averageReactionTime) + "ms");
+
+        //skicka till highscore
+        saveScore(averageReactionTime);
     }
 
     private void clearContent(){
@@ -143,6 +150,17 @@ public class TouchReaction extends AppCompatActivity {
         findViewById(R.id.timer).setVisibility(View.INVISIBLE);
         findViewById(R.id.tooFastText).setVisibility(View.INVISIBLE);
         findViewById(R.id.instructionText).setVisibility(View.INVISIBLE);
+    }
+
+    private void saveScore(long score){
+        //taget från androidauthority och stackoverflow posts
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        Set<String> set = sharedPreferences.getStringSet(state, new HashSet<String>());
+        set.add(Long.toString(score));
+        editor.putStringSet(state, set);
+        editor.apply();
     }
 
     @Override
