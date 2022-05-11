@@ -24,10 +24,11 @@ public class TouchReaction extends AppCompatActivity {
     private View root;
     private String state;
     private Vibrator vibrator;
+    private MediaPlayer mediaPlayer = null;
 
     private long startTime;
     private boolean hasCalled = false;
-    private boolean paused = false;
+    private boolean paused = true;
     private ArrayList<Long> reactionTimes = new ArrayList<>();
 
     //final variables
@@ -50,8 +51,7 @@ public class TouchReaction extends AppCompatActivity {
 
         TextView instructions = findViewById(R.id.instructionText);
         if (state.equals("sound")) {
-            instructions.setText("När du hör en signal, tryck så snabbt du kan." +
-                    "\n Kom ihåg att höja volymen på mobilen");
+            instructions.setText("När du hör en signal, tryck så snabbt du kan.\nKom ihåg att höja volymen");
         } else if (state.equals("vibration")) {
             instructions.setText("När du känner en vibration, tryck så snabbt du kan.");
         } else if (state.equals("visual")){
@@ -67,7 +67,14 @@ public class TouchReaction extends AppCompatActivity {
         paused = false;
 
         clearContent();
-        root.setBackgroundColor(ContextCompat.getColor(this, android.R.color.holo_red_dark));
+        if (state.equals("sound")) {
+            root.setBackgroundColor(ContextCompat.getColor(this, android.R.color.holo_blue_dark));
+            mediaPlayer = MediaPlayer.create(this, R.raw.notice);
+        } else if (state.equals("vibration")) {
+            root.setBackgroundColor(ContextCompat.getColor(this, android.R.color.holo_blue_dark));
+        } else if (state.equals("visual")){
+            root.setBackgroundColor(ContextCompat.getColor(this, android.R.color.holo_red_dark));
+        }
         ((Button) findViewById(R.id.continueBtn)).setText("Fortsätt");
 
         long timer = (long) (minWait + (random.nextDouble() * (maxWait-minWait)));
@@ -79,10 +86,9 @@ public class TouchReaction extends AppCompatActivity {
         startTime = System.currentTimeMillis();
 
         if (state.equals("sound")) {
-            final MediaPlayer testSound = MediaPlayer.create(this, R.raw.notice);
-            testSound.setVolume(1,1);
-            testSound.start();
-            Log.w("Audio Test","Duration: "+testSound.getDuration());
+            mediaPlayer.setVolume(1,1);
+            mediaPlayer.start();
+            Log.w("Audio Test","Duration: " + mediaPlayer.getDuration());
             //startTime = System.currentTimeMillis();
         } else if (state.equals("vibration")) {
             vibrator.vibrate(250);
@@ -100,8 +106,11 @@ public class TouchReaction extends AppCompatActivity {
         if (paused) {
             return;
         }
+        if (mediaPlayer != null) {
+            mediaPlayer.stop();
+        }
 
-        root.setBackgroundColor(ContextCompat.getColor(this, android.R.color.holo_blue_dark));
+        root.setBackgroundColor(ContextCompat.getColor(this, android.R.color.white));
         findViewById(R.id.continueBtn).setVisibility(View.VISIBLE);
         paused = true;
 
@@ -166,6 +175,7 @@ public class TouchReaction extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        handler.removeCallbacksAndMessages(null);
         MediaPlayer backSound = MediaPlayer.create(this, R.raw.back);
         backSound.start();
     }

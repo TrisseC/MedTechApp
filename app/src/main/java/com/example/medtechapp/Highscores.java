@@ -57,7 +57,7 @@ public class Highscores extends AppCompatActivity {
         int counter = 1;
         scoreTextView.setText("");
         for(int score : intList){
-            scoreTextView.setText(scoreTextView.getText() + "  " + Integer.toString(counter) + ". "
+            scoreTextView.setText(scoreTextView.getText() + "  " + Integer.toString(counter) + ": "
             + Integer.toString(score) + " ms\n");
             counter++;
             if (counter >= 21){break;}
