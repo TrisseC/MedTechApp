@@ -77,6 +77,11 @@ public class TouchReaction extends AppCompatActivity {
         }
     }
 
+    public void updateProgress(){
+        ProgressBar progressBar = findViewById(R.id.progressBar2);
+        progressBar.setProgress((100/rounds)*(reactionTimes.size()));
+    }
+
     public void stopTime(View view){
         if (paused) {
             return;
@@ -99,7 +104,7 @@ public class TouchReaction extends AppCompatActivity {
         timerTV.setText(Long.toString(reactionTime) + "ms");
         reactionTimes.add(reactionTime);
         hasCalled = false;
-
+        updateProgress();
         if (reactionTimes.size() >= rounds){
             endTest();
         }
