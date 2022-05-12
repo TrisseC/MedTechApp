@@ -176,6 +176,9 @@ public class TouchReaction extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         handler.removeCallbacksAndMessages(null);
+        if (mediaPlayer != null) {
+            mediaPlayer.stop();
+        }
         MediaPlayer backSound = MediaPlayer.create(this, R.raw.back);
         backSound.start();
     }

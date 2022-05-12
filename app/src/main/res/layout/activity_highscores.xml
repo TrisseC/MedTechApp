@@ -23,13 +23,13 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="Ljud"
-            android:textSize="24sp" />
+            android:textSize="22sp" />
 
         <TextView
             android:id="@+id/ljudScores"
             android:layout_width="match_parent"
             android:layout_height="557dp"
-            android:text="   1. test"
+            android:text="1. test"
             android:textSize="16sp" />
     </LinearLayout>
 
@@ -50,7 +50,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="Visuellt"
-            android:textSize="24sp" />
+            android:textSize="22sp" />
 
         <TextView
             android:id="@+id/visScores"
@@ -77,7 +77,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="Rörelse"
-            android:textSize="24sp" />
+            android:textSize="22sp" />
 
         <TextView
             android:id="@+id/moveScores"
@@ -104,7 +104,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="Vibration"
-            android:textSize="24sp" />
+            android:textSize="22sp" />
 
         <TextView
             android:id="@+id/vibScores"
