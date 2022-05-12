@@ -5,6 +5,7 @@
     android:id="@+id/screen"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     android:paddingTop="?attr/actionBarSize">
 
     <androidx.fragment.app.FragmentContainerView
@@ -20,8 +21,8 @@
         android:id="@+id/button"
         android:layout_width="207dp"
         android:layout_height="54dp"
-        android:text="@string/hs_text"
         android:onClick="openHighscores"
+        android:text="@string/hs_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -43,8 +44,8 @@
             android:id="@+id/button5"
             android:layout_width="match_parent"
             android:layout_height="90dp"
-            android:text="@string/visual_text"
             android:onClick="openVisual"
+            android:text="@string/visual_text"
             android:textSize="24sp"
             tools:ignore="UsingOnClickInXml" />
 
@@ -62,8 +63,8 @@
             android:id="@+id/button2"
             android:layout_width="match_parent"
             android:layout_height="90dp"
-            android:text="@string/audial_text"
             android:onClick="openSound"
+            android:text="@string/audial_text"
             android:textSize="24sp"
             tools:ignore="UsingOnClickInXml" />
 

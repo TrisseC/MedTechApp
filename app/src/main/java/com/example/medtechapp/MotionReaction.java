@@ -16,7 +16,6 @@ public class MotionReaction extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_motion);
         root = findViewById(R.id.screen).getRootView();
-        root.setBackgroundColor(ContextCompat.getColor(this, android.R.color.white));
     }
 
     @Override

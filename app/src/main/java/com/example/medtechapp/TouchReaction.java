@@ -57,7 +57,6 @@ public class TouchReaction extends AppCompatActivity {
         } else if (state.equals("visual")){
             instructions.setText("När den röda skärmen blir grön, tryck så snabbt du kan.");
         }
-        root.setBackgroundColor(ContextCompat.getColor(this, android.R.color.white));
     }
 
     public void startTest(View view) {

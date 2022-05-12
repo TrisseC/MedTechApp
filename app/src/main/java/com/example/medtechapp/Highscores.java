@@ -18,8 +18,6 @@ import java.util.Set;
 
 public class Highscores extends AppCompatActivity {
 
-    private View root;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,9 +27,6 @@ public class Highscores extends AppCompatActivity {
         getScores("vibration");
         getScores("visual");
         getScores("movement");
-
-        root = findViewById(R.id.screen).getRootView();
-        root.setBackgroundColor(ContextCompat.getColor(this, android.R.color.white));
     }
 
 
