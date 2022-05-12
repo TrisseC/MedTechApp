@@ -23,6 +23,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="Ljud"
+            android:textColor="#000000"
             android:textSize="22sp" />
 
         <TextView
@@ -30,6 +31,7 @@
             android:layout_width="match_parent"
             android:layout_height="557dp"
             android:text="1. test"
+            android:textColor="#000000"
             android:textSize="16sp" />
     </LinearLayout>
 
@@ -50,6 +52,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="Visuellt"
+            android:textColor="#000000"
             android:textSize="22sp" />
 
         <TextView
@@ -57,7 +60,8 @@
             android:layout_width="match_parent"
             android:layout_height="557dp"
             android:text="1. test"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:textColor="#000000" />
     </LinearLayout>
 
     <LinearLayout
@@ -77,6 +81,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="Rörelse"
+            android:textColor="#000000"
             android:textSize="22sp" />
 
         <TextView
@@ -84,6 +89,7 @@
             android:layout_width="match_parent"
             android:layout_height="557dp"
             android:text="1. test"
+            android:textColor="#000000"
             android:textSize="16sp" />
     </LinearLayout>
 
@@ -104,6 +110,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="Vibration"
+            android:textColor="#000000"
             android:textSize="22sp" />
 
         <TextView
@@ -111,6 +118,7 @@
             android:layout_width="match_parent"
             android:layout_height="557dp"
             android:text="1. test"
+            android:textColor="#000000"
             android:textSize="16sp" />
     </LinearLayout>
 
