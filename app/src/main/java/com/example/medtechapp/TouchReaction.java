@@ -71,6 +71,7 @@ public class TouchReaction extends AppCompatActivity {
         if (state.equals("sound")) {
             root.setBackgroundColor(ContextCompat.getColor(this, android.R.color.holo_blue_dark));
             mediaPlayer = MediaPlayer.create(this, R.raw.notice);
+            mediaPlayer.setVolume(1,1);
         } else if (state.equals("vibration")) {
             root.setBackgroundColor(ContextCompat.getColor(this, android.R.color.holo_blue_dark));
         } else if (state.equals("visual")){
@@ -87,7 +88,6 @@ public class TouchReaction extends AppCompatActivity {
         startTime = System.currentTimeMillis();
 
         if (state.equals("sound")) {
-            mediaPlayer.setVolume(1,1);
             mediaPlayer.start();
             Log.w("Audio Test","Duration: " + mediaPlayer.getDuration());
             //startTime = System.currentTimeMillis();
