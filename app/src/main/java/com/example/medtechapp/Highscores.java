@@ -1,12 +1,13 @@
 package com.example.medtechapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.view.View;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -17,6 +18,8 @@ import java.util.Set;
 
 public class Highscores extends AppCompatActivity {
 
+    private View root;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +29,9 @@ public class Highscores extends AppCompatActivity {
         getScores("vibration");
         getScores("visual");
         getScores("movement");
+
+        root = findViewById(R.id.screen).getRootView();
+        root.setBackgroundColor(ContextCompat.getColor(this, android.R.color.white));
     }
 
 
