@@ -45,7 +45,7 @@ public class TouchReaction extends AppCompatActivity {
         root = findViewById(R.id.screen).getRootView();
         vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
         state = getIntent().getStringExtra("state");
-
+        root.setBackgroundColor(ContextCompat.getColor(this, android.R.color.white));
         findViewById(R.id.timer).setVisibility(View.INVISIBLE);
         findViewById(R.id.tooFastText).setVisibility(View.INVISIBLE);
 
