@@ -49,6 +49,7 @@ public class MotionReaction extends AppCompatActivity implements SensorEventList
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        handler.removeCallbacksAndMessages(null);
         MediaPlayer backSound = MediaPlayer.create(this, R.raw.back);
         backSound.start();
     }

@@ -8,6 +8,22 @@
     android:background="#FFFFFF"
     android:paddingTop="?attr/actionBarSize">
 
+    <TextView
+        android:id="@+id/instructionText2"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="4dp"
+        android:text="@string/motion_instruction"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/continueBtn3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <Button
         android:id="@+id/continueBtn3"
         android:layout_width="250dp"
