@@ -8,62 +8,16 @@
     android:background="#FFFFFF"
     android:paddingTop="?attr/actionBarSize">
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/nav_host_fragment_activity_main"
-        android:name="androidx.navigation.fragment.NavHostFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:defaultNavHost="true"
-        app:navGraph="@navigation/mobile_navigation"
-        tools:layout_editor_absoluteY="326dp" />
-
     <Button
-        android:id="@+id/button"
-        android:layout_width="207dp"
-        android:layout_height="54dp"
-        android:text="HIGHSCORES"
+        android:id="@+id/continueBtn3"
+        android:layout_width="250dp"
+        android:layout_height="96dp"
+        android:onClick="startTest"
+        android:text="@string/start_test_text"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <LinearLayout
-        android:id="@+id/top"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="100dp"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button">
-
-        <Button
-            android:id="@+id/button5"
-            android:layout_width="match_parent"
-            android:layout_height="90dp"
-            android:text="Ljud"
-            android:textSize="24sp" />
-
-        <Button
-            android:id="@+id/moveButton"
-            android:layout_width="match_parent"
-            android:layout_height="90dp"
-            android:text="Text"
-            android:textSize="24sp" />
-
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="RÖRELSE"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toStartOf="@+id/nav_host_fragment_activity_main"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/nav_host_fragment_activity_main"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

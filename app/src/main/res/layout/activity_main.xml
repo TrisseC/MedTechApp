@@ -68,6 +68,15 @@
             android:textSize="24sp"
             tools:ignore="UsingOnClickInXml" />
 
+        <Button
+            android:id="@+id/button4"
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:onClick="openMovement"
+            android:text="@string/movement_text"
+            android:textSize="24sp"
+            tools:ignore="UsingOnClickInXml" />
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

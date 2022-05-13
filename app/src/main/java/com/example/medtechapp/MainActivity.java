@@ -43,6 +43,12 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void openMovement(View view){
+        playClickSound();
+        Intent intent = new Intent(this, MotionReaction.class);
+        startActivity(intent);
+    }
+
     private void playClickSound() {
         MediaPlayer clickSound = MediaPlayer.create(this, R.raw.go);
         clickSound.start();
