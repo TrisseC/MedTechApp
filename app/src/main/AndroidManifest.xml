@@ -14,9 +14,6 @@
             android:name=".TouchReaction"
             android:exported="false" />
         <activity
-            android:name=".Visual"
-            android:exported="false" />
-        <activity
             android:name=".Highscores"
             android:exported="false" />
         <activity
