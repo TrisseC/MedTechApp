@@ -31,7 +31,9 @@ public class TouchReaction extends AppCompatActivity {
     private boolean paused = true;
     private ArrayList<Long> reactionTimes = new ArrayList<>();
 
-    //final variables
+    /**
+     * Final variables
+     */
     final private int rounds = 5;
     final private double maxWait = 3500.0;
     final private double minWait = 1000.0;
