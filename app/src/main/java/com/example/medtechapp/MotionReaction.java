@@ -77,9 +77,9 @@ public class MotionReaction extends AppCompatActivity implements SensorEventList
     }
 
     public void callBack(View view){
-        if (distance(currentRotation, startRotation) > 25) {
+        if (distance(currentRotation, startRotation) > 10) {
             startRotation = currentRotation;
-            handler.postDelayed(() -> callBack(view), 100);
+            handler.postDelayed(() -> callBack(view), 500);
             return;
         }
 
