@@ -42,6 +42,8 @@ public class MotionReaction extends AppCompatActivity implements SensorEventList
     final private int rounds = 5;
     final private double maxWait = 2000.0;
     final private double minWait = 500.0;
+    final private float minRotation = 40;
+    final private float maxRotation = 170;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,12 +82,8 @@ public class MotionReaction extends AppCompatActivity implements SensorEventList
         direction = random.nextInt(2)*2-1;
         findViewById(R.id.arrow).setVisibility(View.VISIBLE);
         findViewById(R.id.arrow).setRotation(90*direction-90);
-        endRotation = (startRotation + (45 + random.nextInt(135))*direction)%360;
 
-        // SHOW ARROW
-        // INIT SENSORS
-        // START TIMER
-
+        endRotation = (startRotation + (minRotation + (float) random.nextDouble() * (maxRotation-minRotation))*direction)%360;
     }
 
     protected void onResume() {
@@ -115,7 +113,7 @@ public class MotionReaction extends AppCompatActivity implements SensorEventList
             return;
         }
 
-        if (!hasCalled && distance(currentRotation, startRotation) > 15) {
+        if (!hasCalled && distance(currentRotation, startRotation) > 25) {
             tooFast();
             return;
         }
