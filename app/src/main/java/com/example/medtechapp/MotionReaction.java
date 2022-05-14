@@ -115,7 +115,7 @@ public class MotionReaction extends AppCompatActivity implements SensorEventList
             return;
         }
 
-        if (frontTilt > 10 || frontTilt < -110 || sideTilt > 30 || sideTilt < -30) {
+        if (frontTilt > 0 || frontTilt < -110 || sideTilt > 60 || sideTilt < -60) {
             wrongRotation();
             return;
         }
