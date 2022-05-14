@@ -11,7 +11,9 @@ import android.hardware.SensorManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Vibrator;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -23,6 +25,7 @@ public class MotionReaction extends AppCompatActivity implements SensorEventList
     private Random random;
     private View root;
     private SensorManager sensorManager;
+    private Vibrator vibrator;
 
     private long startTime;
     private boolean hasCalled = false;
@@ -47,10 +50,12 @@ public class MotionReaction extends AppCompatActivity implements SensorEventList
         root = findViewById(R.id.screen).getRootView();
         handler = new Handler();
         random = new Random();
+        vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+        sensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
 
         root.setBackgroundColor(ContextCompat.getColor(this, android.R.color.white));
-        sensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
         findViewById(R.id.arrow).setVisibility(View.INVISIBLE);
+        findViewById(R.id.timer2).setVisibility(View.INVISIBLE);
     }
 
     public void startTest(View view){
@@ -61,6 +66,7 @@ public class MotionReaction extends AppCompatActivity implements SensorEventList
         paused = false;
         hasCalled = false;
         root.setBackgroundColor(ContextCompat.getColor(this, android.R.color.holo_blue_dark));
+        ((Button) findViewById(R.id.continueBtn3)).setText("Fortsätt");
 
         long timer = (long) (minWait + (random.nextDouble() * (maxWait-minWait)));
         handler.postDelayed(() -> callBack(view), timer);
@@ -69,6 +75,7 @@ public class MotionReaction extends AppCompatActivity implements SensorEventList
     public void callBack(View view){
         hasCalled = true;
         root.setBackgroundColor(ContextCompat.getColor(this, android.R.color.white));
+        vibrator.vibrate(200);
 
         direction = random.nextInt(2)*2-1;
         findViewById(R.id.arrow).setVisibility(View.VISIBLE);
@@ -98,8 +105,6 @@ public class MotionReaction extends AppCompatActivity implements SensorEventList
         float frontTilt = Math.round(event.values[1]);
         float sideTilt = Math.round(event.values[2]);
 
-        ((TextView)findViewById(R.id.timer2)).setText("" + currentRotation);
-
         if (paused) {
             startRotation = event.values[0];
             return;
@@ -107,33 +112,54 @@ public class MotionReaction extends AppCompatActivity implements SensorEventList
 
         if (frontTilt > 10 || frontTilt < -110 || sideTilt > 30 || sideTilt < -30) {
             wrongRotation();
+            return;
         }
 
         if (!hasCalled && distance(currentRotation, startRotation) > 15) {
             tooFast();
+            return;
         }
 
-        if (distance(currentRotation, endRotation) < 15) {
+        if (hasCalled && distance(currentRotation, endRotation) < 15) {
             movementCompleted();
         }
     }
 
     public void movementCompleted() {
+        interrupt();
         root.setBackgroundColor(ContextCompat.getColor(this, android.R.color.holo_green_dark));
     }
 
     public void wrongRotation() {
+        interrupt();
+        TextView instruction = ((TextView) findViewById(R.id.instructionText2));
+        instruction.setVisibility(View.VISIBLE);
+        instruction.setText("Var god och håll telefonen upprätt!");
         root.setBackgroundColor(ContextCompat.getColor(this, android.R.color.holo_red_dark));
     }
 
     public void tooFast() {
+        interrupt();
+        TextView instruction = ((TextView) findViewById(R.id.instructionText2));
+        instruction.setVisibility(View.VISIBLE);
+        instruction.setText("Håll mobilen stilla innan testet startar!");
         root.setBackgroundColor(ContextCompat.getColor(this, android.R.color.holo_red_dark));
+    }
+
+    private void interrupt() {
+        vibrator.vibrate(200);
+        handler.removeCallbacksAndMessages(null);
+        findViewById(R.id.arrow).setVisibility(View.INVISIBLE);
+        paused = true;
+        hasCalled = false;
+        findViewById(R.id.continueBtn3).setVisibility(View.VISIBLE);
     }
 
     private void clearContent(){
         findViewById(R.id.continueBtn3).setVisibility(View.INVISIBLE);
         findViewById(R.id.instructionText2).setVisibility(View.INVISIBLE);
         findViewById(R.id.arrow).setVisibility(View.INVISIBLE);
+        findViewById(R.id.timer2).setVisibility(View.INVISIBLE);
     }
 
     @Override
