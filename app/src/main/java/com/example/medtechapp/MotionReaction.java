@@ -73,7 +73,7 @@ public class MotionReaction extends AppCompatActivity implements SensorEventList
         direction = random.nextInt(2)*2-1;
         findViewById(R.id.arrow).setVisibility(View.VISIBLE);
         findViewById(R.id.arrow).setRotation(90*direction-90);
-        endRotation = (45 + random.nextInt(135))*direction;
+        endRotation = (startRotation + (45 + random.nextInt(135))*direction)%360;
 
         // SHOW ARROW
         // INIT SENSORS
