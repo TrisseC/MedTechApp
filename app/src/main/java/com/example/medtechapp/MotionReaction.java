@@ -110,13 +110,13 @@ public class MotionReaction extends AppCompatActivity implements SensorEventList
 
     public void onSensorChanged(SensorEvent event) {
         currentRotation = event.values[0];
-        float frontTilt = Math.round(event.values[1]);
-        float sideTilt = Math.round(event.values[2]);
 
         if (paused || !hasCalled) {
             return;
         }
 
+        float frontTilt = event.values[1];
+        float sideTilt = event.values[2];
         if (frontTilt > 5 || frontTilt < -105 || sideTilt > 50 || sideTilt < -50) {
             wrongRotation();
             return;
