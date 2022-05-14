@@ -43,8 +43,8 @@ public class MotionReaction extends AppCompatActivity implements SensorEventList
     final private int rounds = 5;
     final private double maxWait = 2000.0;
     final private double minWait = 750.0;
-    final private float minRotation = 40;
-    final private float maxRotation = 170;
+    final private float minRotation = 75;
+    final private float maxRotation = 150;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +92,7 @@ public class MotionReaction extends AppCompatActivity implements SensorEventList
         findViewById(R.id.arrow).setRotation(90*direction-90);
 
         endRotation = (currentRotation + (minRotation + (float) random.nextDouble() * (maxRotation-minRotation))*direction)%360;
+        startTime = System.currentTimeMillis();
     }
 
     protected void onResume() {
@@ -128,6 +129,12 @@ public class MotionReaction extends AppCompatActivity implements SensorEventList
     public void movementCompleted() {
         interrupt();
         root.setBackgroundColor(ContextCompat.getColor(this, android.R.color.holo_green_dark));
+
+        long reactionTime = System.currentTimeMillis() - startTime;
+        TextView timerTV = findViewById(R.id.timer2);
+        timerTV.setVisibility(View.VISIBLE);
+        timerTV.setText(Long.toString(reactionTime) + "ms");
+        reactionTimes.add(reactionTime);
     }
 
     public void wrongRotation() {
@@ -135,7 +142,7 @@ public class MotionReaction extends AppCompatActivity implements SensorEventList
         TextView instruction = ((TextView) findViewById(R.id.instructionText2));
         instruction.setVisibility(View.VISIBLE);
         instruction.setText("Var god och håll telefonen upprätt!");
-        root.setBackgroundColor(ContextCompat.getColor(this, android.R.color.holo_red_dark));
+        root.setBackgroundColor(ContextCompat.getColor(this, android.R.color.darker_gray));
     }
 
     private void interrupt() {
