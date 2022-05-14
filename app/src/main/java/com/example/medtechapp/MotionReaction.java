@@ -33,15 +33,16 @@ public class MotionReaction extends AppCompatActivity implements SensorEventList
     private ArrayList<Long> reactionTimes = new ArrayList<>();
 
     private float startRotation;
-    private int direction; //-1 if left, 1 if right
+    private float currentRotation;
     private float endRotation;
+    private int direction; //-1 if left, 1 if right
 
     /**
      * Final variables
      */
     final private int rounds = 5;
     final private double maxWait = 2000.0;
-    final private double minWait = 500.0;
+    final private double minWait = 750.0;
     final private float minRotation = 40;
     final private float maxRotation = 170;
 
@@ -70,11 +71,18 @@ public class MotionReaction extends AppCompatActivity implements SensorEventList
         root.setBackgroundColor(ContextCompat.getColor(this, android.R.color.holo_blue_dark));
         ((Button) findViewById(R.id.continueBtn3)).setText("Fortsätt");
 
+        startRotation = currentRotation;
         long timer = (long) (minWait + (random.nextDouble() * (maxWait-minWait)));
         handler.postDelayed(() -> callBack(view), timer);
     }
 
     public void callBack(View view){
+        if (distance(currentRotation, startRotation) > 25) {
+            startRotation = currentRotation;
+            handler.postDelayed(() -> callBack(view), 100);
+            return;
+        }
+
         hasCalled = true;
         root.setBackgroundColor(ContextCompat.getColor(this, android.R.color.white));
         vibrator.vibrate(200);
@@ -83,7 +91,7 @@ public class MotionReaction extends AppCompatActivity implements SensorEventList
         findViewById(R.id.arrow).setVisibility(View.VISIBLE);
         findViewById(R.id.arrow).setRotation(90*direction-90);
 
-        endRotation = (startRotation + (minRotation + (float) random.nextDouble() * (maxRotation-minRotation))*direction)%360;
+        endRotation = (currentRotation + (minRotation + (float) random.nextDouble() * (maxRotation-minRotation))*direction)%360;
     }
 
     protected void onResume() {
@@ -99,22 +107,16 @@ public class MotionReaction extends AppCompatActivity implements SensorEventList
     public void onAccuracyChanged(Sensor sensor, int accuracy) {  }
 
     public void onSensorChanged(SensorEvent event) {
-        float currentRotation = event.values[0];
+        currentRotation = event.values[0];
         float frontTilt = Math.round(event.values[1]);
         float sideTilt = Math.round(event.values[2]);
 
         if (paused) {
-            startRotation = event.values[0];
             return;
         }
 
         if (frontTilt > 10 || frontTilt < -110 || sideTilt > 30 || sideTilt < -30) {
             wrongRotation();
-            return;
-        }
-
-        if (!hasCalled && distance(currentRotation, startRotation) > 25) {
-            tooFast();
             return;
         }
 
@@ -133,14 +135,6 @@ public class MotionReaction extends AppCompatActivity implements SensorEventList
         TextView instruction = ((TextView) findViewById(R.id.instructionText2));
         instruction.setVisibility(View.VISIBLE);
         instruction.setText("Var god och håll telefonen upprätt!");
-        root.setBackgroundColor(ContextCompat.getColor(this, android.R.color.holo_red_dark));
-    }
-
-    public void tooFast() {
-        interrupt();
-        TextView instruction = ((TextView) findViewById(R.id.instructionText2));
-        instruction.setVisibility(View.VISIBLE);
-        instruction.setText("Håll mobilen stilla innan testet startar!");
         root.setBackgroundColor(ContextCompat.getColor(this, android.R.color.holo_red_dark));
     }
 
