@@ -113,16 +113,16 @@ public class MotionReaction extends AppCompatActivity implements SensorEventList
         float frontTilt = Math.round(event.values[1]);
         float sideTilt = Math.round(event.values[2]);
 
-        if (paused) {
+        if (paused || !hasCalled) {
             return;
         }
 
-        if (hasCalled && (frontTilt > 5 || frontTilt < -105 || sideTilt > 50 || sideTilt < -50)) {
+        if (frontTilt > 5 || frontTilt < -105 || sideTilt > 50 || sideTilt < -50) {
             wrongRotation();
             return;
         }
 
-        if (hasCalled && distance(currentRotation, endRotation) < 15) {
+        if (distance(currentRotation, endRotation) < 15) {
             movementCompleted();
         }
     }
