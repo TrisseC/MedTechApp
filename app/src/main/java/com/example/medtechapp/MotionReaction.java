@@ -171,7 +171,7 @@ public class MotionReaction extends AppCompatActivity implements SensorEventList
 
         TextView instructions = findViewById(R.id.instructionText2);
         instructions.setVisibility(View.VISIBLE);
-        instructions.setText("Bra jobbat!\nKlicka på tillbakapilen för att gå till menyn");
+        instructions.setText("Bra jobbat!\nKlicka på tillbakapilen längst ner till höger för att gå till menyn");
 
         TextView timerTV = findViewById(R.id.timer2);
         timerTV.setVisibility(View.VISIBLE);
