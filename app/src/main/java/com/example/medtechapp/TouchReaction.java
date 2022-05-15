@@ -48,6 +48,7 @@ public class TouchReaction extends AppCompatActivity {
         vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
         state = getIntent().getStringExtra("state");
         mediaPlayer = MediaPlayer.create(this, R.raw.notice);
+        mediaPlayer.setVolume(1,1);
 
         root.setBackgroundColor(ContextCompat.getColor(this, android.R.color.white));
         findViewById(R.id.timer).setVisibility(View.INVISIBLE);
