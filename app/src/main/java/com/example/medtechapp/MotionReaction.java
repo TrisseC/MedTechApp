@@ -27,9 +27,10 @@ public class MotionReaction extends AppCompatActivity implements SensorEventList
     private SensorManager sensorManager;
     private Vibrator vibrator;
 
-    private long startTime;
     private boolean hasCalled = false;
     private boolean paused = true;
+
+    private long startTime;
     private ArrayList<Long> reactionTimes = new ArrayList<>();
 
     private float startRotation;
@@ -43,8 +44,8 @@ public class MotionReaction extends AppCompatActivity implements SensorEventList
     final private int rounds = 5;
     final private double maxWait = 2000.0;
     final private double minWait = 750.0;
-    final private float minRotation = 75;
-    final private float maxRotation = 150;
+    final private double minRotation = 75.0;
+    final private double maxRotation = 150.0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,7 +92,7 @@ public class MotionReaction extends AppCompatActivity implements SensorEventList
         findViewById(R.id.arrow).setVisibility(View.VISIBLE);
         findViewById(R.id.arrow).setRotation(90*direction-90);
 
-        endRotation = (currentRotation + (minRotation + (float) random.nextDouble() * (maxRotation-minRotation))*direction)%360;
+        endRotation = (currentRotation + direction * (float) (minRotation + random.nextDouble()*(maxRotation-minRotation))) % 360;
         startTime = System.currentTimeMillis();
     }
 
@@ -109,19 +110,19 @@ public class MotionReaction extends AppCompatActivity implements SensorEventList
 
     public void onSensorChanged(SensorEvent event) {
         currentRotation = event.values[0];
-        float frontTilt = Math.round(event.values[1]);
-        float sideTilt = Math.round(event.values[2]);
 
-        if (paused) {
+        if (paused || !hasCalled) {
             return;
         }
 
-        if (frontTilt > 0 || frontTilt < -110 || sideTilt > 60 || sideTilt < -60) {
+        float frontTilt = event.values[1];
+        float sideTilt = event.values[2];
+        if (frontTilt > 5 || frontTilt < -105 || sideTilt > 50 || sideTilt < -50) {
             wrongRotation();
             return;
         }
 
-        if (hasCalled && distance(currentRotation, endRotation) < 15) {
+        if (distance(currentRotation, endRotation) < 15) {
             movementCompleted();
         }
     }
