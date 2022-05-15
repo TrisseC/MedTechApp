@@ -3,6 +3,7 @@ package com.example.medtechapp;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -12,12 +13,16 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 
 public class MotionReaction extends AppCompatActivity implements SensorEventListener {
 
@@ -42,8 +47,8 @@ public class MotionReaction extends AppCompatActivity implements SensorEventList
      * Final variables
      */
     final private int rounds = 5;
-    final private double maxWait = 2000.0;
-    final private double minWait = 750.0;
+    final private double maxWait = 1800.0;
+    final private double minWait = 900.0;
     final private double minRotation = 75.0;
     final private double maxRotation = 150.0;
 
@@ -62,28 +67,31 @@ public class MotionReaction extends AppCompatActivity implements SensorEventList
         findViewById(R.id.timer2).setVisibility(View.INVISIBLE);
     }
 
-    public void startTest(View view){
+    public void startButton(View view) {
         final MediaPlayer tapSound = MediaPlayer.create(this, R.raw.go);
         tapSound.start();
 
         clearContent();
-        paused = false;
-        hasCalled = false;
         root.setBackgroundColor(ContextCompat.getColor(this, android.R.color.holo_blue_dark));
-        ((Button) findViewById(R.id.continueBtn3)).setText("Fortsätt");
 
-        startRotation = currentRotation;
-        long timer = (long) (minWait + (random.nextDouble() * (maxWait-minWait)));
-        handler.postDelayed(() -> callBack(view), timer);
+        startTest();
     }
 
-    public void callBack(View view){
+    public void startTest(){
+        paused = false;
+        hasCalled = false;
+        startRotation = currentRotation;
+        long timer = (long) (minWait + (random.nextDouble() * (maxWait-minWait)));
+        handler.postDelayed(() -> callBack(), timer);
+    }
+
+    public void callBack(){
         if (distance(currentRotation, startRotation) > 10) {
             startRotation = currentRotation;
-            handler.postDelayed(() -> callBack(view), 500);
+            handler.postDelayed(() -> callBack(), 500);
             return;
         }
-
+        clearContent();
         hasCalled = true;
         root.setBackgroundColor(ContextCompat.getColor(this, android.R.color.white));
         vibrator.vibrate(200);
@@ -127,19 +135,66 @@ public class MotionReaction extends AppCompatActivity implements SensorEventList
         }
     }
 
+    public void updateProgress(){
+        ProgressBar progressBar = findViewById(R.id.progressBar);
+        progressBar.setProgress((100/rounds)*(reactionTimes.size()));
+    }
+
     public void movementCompleted() {
         interrupt();
         root.setBackgroundColor(ContextCompat.getColor(this, android.R.color.holo_green_dark));
-
         long reactionTime = System.currentTimeMillis() - startTime;
+
+        reactionTimes.add(reactionTime);
+
+        updateProgress();
+        if (reactionTimes.size() >= rounds){
+            endTest();
+        } else {
+            TextView instruction = findViewById(R.id.instructionText2);
+            instruction.setVisibility(View.VISIBLE);
+            instruction.setText("Bra jobbat!\nNästa runda kommer snart att börja");
+
+            TextView timerTV = findViewById(R.id.timer2);
+            timerTV.setVisibility(View.VISIBLE);
+            timerTV.setText(Long.toString(reactionTime) + "ms");
+
+            startTest();
+        }
+    }
+
+    private void endTest() {
+        clearContent();
+        long averageReactionTime = 0;
+        for (long rt : reactionTimes){
+            averageReactionTime += rt;
+        }
+        averageReactionTime /= rounds;
+
+        TextView instructions = findViewById(R.id.instructionText2);
+        instructions.setVisibility(View.VISIBLE);
+        instructions.setText("Bra jobbat!\nKlicka på tillbakapilen för att gå till menyn");
+
         TextView timerTV = findViewById(R.id.timer2);
         timerTV.setVisibility(View.VISIBLE);
-        timerTV.setText(Long.toString(reactionTime) + "ms");
-        reactionTimes.add(reactionTime);
+        timerTV.setText("Genomsnitt: " + Long.toString(averageReactionTime) + "ms");
+
+        saveScore(averageReactionTime);
+    }
+
+    private void saveScore(long score){
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        Set<String> set = sharedPreferences.getStringSet("movement", new HashSet<String>());
+        set.add(Long.toString(score));
+        editor.putStringSet("movement", set);
+        editor.apply();
     }
 
     public void wrongRotation() {
         interrupt();
+        findViewById(R.id.continueBtn3).setVisibility(View.VISIBLE);
         TextView instruction = ((TextView) findViewById(R.id.instructionText2));
         instruction.setVisibility(View.VISIBLE);
         instruction.setText("Var god och håll telefonen upprätt!");
@@ -152,7 +207,6 @@ public class MotionReaction extends AppCompatActivity implements SensorEventList
         findViewById(R.id.arrow).setVisibility(View.INVISIBLE);
         paused = true;
         hasCalled = false;
-        findViewById(R.id.continueBtn3).setVisibility(View.VISIBLE);
     }
 
     private void clearContent(){

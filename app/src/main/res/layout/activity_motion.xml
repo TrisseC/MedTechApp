@@ -7,6 +7,17 @@
     android:layout_height="match_parent"
     android:paddingTop="?attr/actionBarSize">
 
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <TextView
         android:id="@+id/timer2"
         android:layout_width="0dp"
@@ -41,7 +52,7 @@
         android:id="@+id/continueBtn3"
         android:layout_width="250dp"
         android:layout_height="96dp"
-        android:onClick="startTest"
+        android:onClick="startButton"
         android:text="@string/start_test_text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
