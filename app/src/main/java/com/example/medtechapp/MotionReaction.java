@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -15,7 +14,6 @@ import android.os.Handler;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -130,7 +128,7 @@ public class MotionReaction extends AppCompatActivity implements SensorEventList
             return;
         }
 
-        if (distance(currentRotation, endRotation) < 15) {
+        if (distance(currentRotation, endRotation) < 20) {
             movementCompleted();
         }
     }
