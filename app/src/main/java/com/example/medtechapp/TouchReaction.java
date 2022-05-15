@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.*;
@@ -56,11 +57,11 @@ public class TouchReaction extends AppCompatActivity {
 
         TextView instructions = findViewById(R.id.instructionText);
         if (state.equals("sound")) {
-            instructions.setText("När du hör en signal, tryck så snabbt du kan.\nKom ihåg att höja volymen");
+            instructions.setText(Html.fromHtml("<b>Tryck</b> så snabbt du kan när du hör en signal.<br>Kom ihåg att höja volymen!"));
         } else if (state.equals("vibration")) {
-            instructions.setText("När du känner en vibration, tryck så snabbt du kan.");
+            instructions.setText(Html.fromHtml("<b>Tryck</b> så snabbt du kan när du känner en vibration"));
         } else if (state.equals("visual")){
-            instructions.setText("När den röda skärmen blir grön, tryck så snabbt du kan.");
+            instructions.setText(Html.fromHtml("<b>Tryck</b> så snabbt du kan när den röda skärmen blir grön"));
         }
     }
 
