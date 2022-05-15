@@ -24,7 +24,7 @@ public class TouchReaction extends AppCompatActivity {
     private View root;
     private String state;
     private Vibrator vibrator;
-    private MediaPlayer mediaPlayer = null;
+    private MediaPlayer mediaPlayer;
 
     private long startTime;
     private boolean hasCalled = false;
@@ -47,6 +47,8 @@ public class TouchReaction extends AppCompatActivity {
         root = findViewById(R.id.screen).getRootView();
         vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
         state = getIntent().getStringExtra("state");
+        mediaPlayer = MediaPlayer.create(this, R.raw.notice);
+
         root.setBackgroundColor(ContextCompat.getColor(this, android.R.color.white));
         findViewById(R.id.timer).setVisibility(View.INVISIBLE);
         findViewById(R.id.tooFastText).setVisibility(View.INVISIBLE);
@@ -62,7 +64,7 @@ public class TouchReaction extends AppCompatActivity {
     }
 
     public void startTest(View view) {
-        final MediaPlayer tapSound = MediaPlayer.create(this, R.raw.go);
+        MediaPlayer tapSound = MediaPlayer.create(this, R.raw.go);
         tapSound.start();
 
         hasCalled = false;
@@ -81,10 +83,10 @@ public class TouchReaction extends AppCompatActivity {
         ((Button) findViewById(R.id.continueBtn)).setText("Fortsätt");
 
         long timer = (long) (minWait + (random.nextDouble() * (maxWait-minWait)));
-        handler.postDelayed(() -> callBack(view), timer);
+        handler.postDelayed(() -> callBack(), timer);
     }
 
-    public void callBack(View view){
+    public void callBack(){
         hasCalled = true;
         startTime = System.currentTimeMillis();
 
@@ -108,13 +110,10 @@ public class TouchReaction extends AppCompatActivity {
         if (paused) {
             return;
         }
-        if (mediaPlayer != null) {
-            mediaPlayer.stop();
-        }
 
-        root.setBackgroundColor(ContextCompat.getColor(this, android.R.color.white));
-        findViewById(R.id.continueBtn).setVisibility(View.VISIBLE);
+        mediaPlayer.stop();
         paused = true;
+        findViewById(R.id.continueBtn).setVisibility(View.VISIBLE);
 
         if (!hasCalled) {
             handler.removeCallbacksAndMessages(null);
@@ -127,6 +126,8 @@ public class TouchReaction extends AppCompatActivity {
         TextView timerTV = findViewById(R.id.timer);
         timerTV.setVisibility(View.VISIBLE);
         timerTV.setText(Long.toString(reactionTime) + "ms");
+        root.setBackgroundColor(ContextCompat.getColor(this, android.R.color.white));
+
         reactionTimes.add(reactionTime);
         hasCalled = false;
         updateProgress();
@@ -144,8 +145,8 @@ public class TouchReaction extends AppCompatActivity {
         averageReactionTime /= rounds;
 
         TextView instructions = findViewById(R.id.instructionText);
+        instructions.setVisibility(View.VISIBLE);
         instructions.setText("Bra jobbat!\nKlicka på tillbakapilen för att gå till menyn");
-        findViewById(R.id.instructionText).setVisibility(View.VISIBLE);
 
 
         TextView timerTV = findViewById(R.id.timer);
@@ -178,9 +179,8 @@ public class TouchReaction extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         handler.removeCallbacksAndMessages(null);
-        if (mediaPlayer != null) {
-            mediaPlayer.stop();
-        }
+        mediaPlayer.stop();
+
         MediaPlayer backSound = MediaPlayer.create(this, R.raw.back);
         backSound.start();
     }
