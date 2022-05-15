@@ -25,7 +25,7 @@ public class TouchReaction extends AppCompatActivity {
     private View root;
     private String state;
     private Vibrator vibrator;
-    private MediaPlayer mediaPlayer;
+    private MediaPlayer mediaPlayer = null;
 
     private long startTime;
     private boolean hasCalled = false;
@@ -48,8 +48,6 @@ public class TouchReaction extends AppCompatActivity {
         root = findViewById(R.id.screen).getRootView();
         vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
         state = getIntent().getStringExtra("state");
-        mediaPlayer = MediaPlayer.create(this, R.raw.notice);
-        mediaPlayer.setVolume(1,1);
 
         root.setBackgroundColor(ContextCompat.getColor(this, android.R.color.white));
         findViewById(R.id.timer).setVisibility(View.INVISIBLE);
@@ -112,8 +110,10 @@ public class TouchReaction extends AppCompatActivity {
         if (paused) {
             return;
         }
+        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+            mediaPlayer.stop();
+        }
 
-        mediaPlayer.stop();
         paused = true;
         findViewById(R.id.continueBtn).setVisibility(View.VISIBLE);
 
@@ -181,7 +181,9 @@ public class TouchReaction extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         handler.removeCallbacksAndMessages(null);
-        mediaPlayer.stop();
+        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+            mediaPlayer.stop();
+        }
 
         MediaPlayer backSound = MediaPlayer.create(this, R.raw.back);
         backSound.start();
