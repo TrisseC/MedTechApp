@@ -52,6 +52,8 @@ public class TouchReaction extends AppCompatActivity {
         root.setBackgroundColor(ContextCompat.getColor(this, android.R.color.white));
         findViewById(R.id.timer).setVisibility(View.INVISIBLE);
         findViewById(R.id.tooFastText).setVisibility(View.INVISIBLE);
+        TextView progressNumber = findViewById(R.id.progressNumber);
+        progressNumber.setText(0 + "/" + rounds);
 
         TextView instructions = findViewById(R.id.instructionText);
         if (state.equals("sound")) {
@@ -104,6 +106,8 @@ public class TouchReaction extends AppCompatActivity {
     public void updateProgress(){
         ProgressBar progressBar = findViewById(R.id.progressBar2);
         progressBar.setProgress((100/rounds)*(reactionTimes.size()));
+        TextView progressNumber = findViewById(R.id.progressNumber);
+        progressNumber.setText(reactionTimes.size() + "/" + rounds);
     }
 
     public void stopTime(View view){

@@ -17,6 +17,8 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Random;
@@ -63,6 +65,8 @@ public class MotionReaction extends AppCompatActivity implements SensorEventList
         root.setBackgroundColor(ContextCompat.getColor(this, android.R.color.white));
         findViewById(R.id.arrow).setVisibility(View.INVISIBLE);
         findViewById(R.id.timer2).setVisibility(View.INVISIBLE);
+        TextView progressNumber = findViewById(R.id.progressNumber);
+        progressNumber.setText(0 + "/" + rounds);
     }
 
     public void startButton(View view) {
@@ -136,6 +140,8 @@ public class MotionReaction extends AppCompatActivity implements SensorEventList
     public void updateProgress(){
         ProgressBar progressBar = findViewById(R.id.progressBar);
         progressBar.setProgress((100/rounds)*(reactionTimes.size()));
+        TextView progressNumber = findViewById(R.id.progressNumber);
+        progressNumber.setText(reactionTimes.size() + "/" + rounds);
     }
 
     public void movementCompleted() {
