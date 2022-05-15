@@ -47,7 +47,7 @@ public class MotionReaction extends AppCompatActivity implements SensorEventList
     final private int rounds = 5;
     final private double maxWait = 1800.0;
     final private double minWait = 900.0;
-    final private double minRotation = 75.0;
+    final private double minRotation = 80.0;
     final private double maxRotation = 150.0;
 
     @Override
