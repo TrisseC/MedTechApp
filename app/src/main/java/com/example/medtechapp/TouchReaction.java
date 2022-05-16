@@ -115,12 +115,14 @@ public class TouchReaction extends AppCompatActivity {
         if (paused) {
             return;
         }
+
+
+        paused = true;
+        long reactionTime = System.currentTimeMillis() - startTime;
+        findViewById(R.id.continueBtn).setVisibility(View.VISIBLE);
         if (mediaPlayer != null && mediaPlayer.isPlaying()) {
             mediaPlayer.stop();
         }
-
-        paused = true;
-        findViewById(R.id.continueBtn).setVisibility(View.VISIBLE);
 
         if (!hasCalled) {
             handler.removeCallbacksAndMessages(null);
@@ -129,15 +131,15 @@ public class TouchReaction extends AppCompatActivity {
             return;
         }
 
-        long reactionTime = System.currentTimeMillis() - startTime;
+        hasCalled = false;
+        reactionTimes.add(reactionTime);
+        updateProgress();
+
         TextView timerTV = findViewById(R.id.timer);
         timerTV.setVisibility(View.VISIBLE);
         timerTV.setText(Long.toString(reactionTime) + "ms");
         root.setBackgroundColor(ContextCompat.getColor(this, android.R.color.white));
 
-        reactionTimes.add(reactionTime);
-        hasCalled = false;
-        updateProgress();
         if (reactionTimes.size() >= rounds){
             endTest();
         }
