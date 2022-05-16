@@ -76,8 +76,8 @@ public class TouchReaction extends AppCompatActivity {
         clearContent();
         if (state.equals("sound")) {
             root.setBackgroundColor(ContextCompat.getColor(this, android.R.color.holo_blue_dark));
-            mediaPlayer = MediaPlayer.create(this, R.raw.ljud);
-            mediaPlayer.setVolume(1,1);
+            mediaPlayer = MediaPlayer.create(this, R.raw.soundfile);
+            mediaPlayer.setVolume(0.25f,0.25f);
         } else if (state.equals("vibration")) {
             root.setBackgroundColor(ContextCompat.getColor(this, android.R.color.holo_blue_dark));
         } else if (state.equals("visual")){
