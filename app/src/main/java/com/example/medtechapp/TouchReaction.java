@@ -150,7 +150,7 @@ public class TouchReaction extends AppCompatActivity {
             mediaPlayer.stop();
         }
 
-        if (!hasCalled) {
+        if (!hasCalled || reactionTime <= 0) {
             handler.removeCallbacksAndMessages(null);
             findViewById(R.id.tooFastText).setVisibility(View.VISIBLE);
             root.setBackgroundColor(ContextCompat.getColor(this, android.R.color.darker_gray));
