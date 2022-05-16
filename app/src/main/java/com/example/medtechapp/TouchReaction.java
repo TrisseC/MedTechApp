@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
-import android.provider.Settings;
 import android.text.Html;
 import android.util.Log;
 import android.view.View;
@@ -66,6 +65,22 @@ public class TouchReaction extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        handler.removeCallbacksAndMessages(null);
+        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+            mediaPlayer.stop();
+        }
+
+        MediaPlayer backSound = MediaPlayer.create(this, R.raw.back);
+        backSound.start();
+    }
+
+    /**
+     * Called whenever the user presses the "Fortsätt" or "Starta testet" button.
+     * Will clear the screen and prepare the phone for the test
+     */
     public void startTest(View view) {
         MediaPlayer tapSound = MediaPlayer.create(this, R.raw.go);
         tapSound.start();
@@ -89,6 +104,10 @@ public class TouchReaction extends AppCompatActivity {
         handler.postDelayed(() -> callBack(), timer);
     }
 
+    /**
+     * Called within a random time interval after startTest.
+     * Gives the user visual, auditory, or haptic feedback and begins the time keeping
+     */
     public void callBack(){
         hasCalled = true;
         startTime = System.currentTimeMillis();
@@ -96,7 +115,7 @@ public class TouchReaction extends AppCompatActivity {
         if (state.equals("sound")) {
             mediaPlayer.start();
             Log.w("Audio Test","Duration: " + mediaPlayer.getDuration());
-            //startTime = System.currentTimeMillis();
+            startTime += 200; //Because the audio is delayed by around 200 ms before playing
         } else if (state.equals("vibration")) {
             vibrator.vibrate(250);
         } else if (state.equals("visual")){
@@ -104,18 +123,25 @@ public class TouchReaction extends AppCompatActivity {
         }
     }
 
-    public void updateProgress(){
+    /**
+     * Updates the progress bar at the bottom of the screen
+     */
+    public void updateProgress() {
         ProgressBar progressBar = findViewById(R.id.progressBar2);
         progressBar.setProgress((100/rounds)*(reactionTimes.size()));
         TextView progressNumber = findViewById(R.id.progressNumber);
         progressNumber.setText(reactionTimes.size() + "/" + rounds);
     }
 
+
+    /**
+     * Called whenever the user presses the screen
+     * If a test is active it will stop the test and register the time
+     */
     public void stopTime(View view){
         if (paused) {
             return;
         }
-
 
         paused = true;
         long reactionTime = System.currentTimeMillis() - startTime;
@@ -145,6 +171,10 @@ public class TouchReaction extends AppCompatActivity {
         }
     }
 
+    /**
+     * After the test has been completed a number of times equal to the rounds value this function is called
+     * The function will end the test and calculate the average time.
+     */
     private void endTest() {
         clearContent();
         long averageReactionTime = 0;
@@ -161,10 +191,12 @@ public class TouchReaction extends AppCompatActivity {
         timerTV.setVisibility(View.VISIBLE);
         timerTV.setText("Genomsnitt: " + Long.toString(averageReactionTime) + "ms");
 
-        //skicka till highscore
         saveScore(averageReactionTime);
     }
 
+    /**
+     * Sets some views to invisible
+     */
     private void clearContent(){
         findViewById(R.id.continueBtn).setVisibility(View.INVISIBLE);
         findViewById(R.id.timer).setVisibility(View.INVISIBLE);
@@ -172,8 +204,11 @@ public class TouchReaction extends AppCompatActivity {
         findViewById(R.id.instructionText).setVisibility(View.INVISIBLE);
     }
 
+    /**
+     * Saves the average score as a shared preference
+     * @param score
+     */
     private void saveScore(long score){
-        //taget från androidauthority och stackoverflow posts
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
@@ -181,18 +216,6 @@ public class TouchReaction extends AppCompatActivity {
         set.add(Long.toString(score));
         editor.putStringSet(state, set);
         editor.apply();
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        handler.removeCallbacksAndMessages(null);
-        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
-            mediaPlayer.stop();
-        }
-
-        MediaPlayer backSound = MediaPlayer.create(this, R.raw.back);
-        backSound.start();
     }
 
 }
