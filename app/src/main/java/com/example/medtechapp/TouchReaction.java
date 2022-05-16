@@ -114,7 +114,6 @@ public class TouchReaction extends AppCompatActivity {
 
         if (state.equals("sound")) {
             mediaPlayer.start();
-            Log.w("Audio Test","Duration: " + mediaPlayer.getDuration());
             startTime += 200; //Because the audio is delayed by around 200 ms before playing
         } else if (state.equals("vibration")) {
             vibrator.vibrate(250);
