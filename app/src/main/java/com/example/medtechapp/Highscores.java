@@ -1,13 +1,11 @@
 package com.example.medtechapp;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.view.View;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -18,19 +16,19 @@ import java.util.Set;
 
 public class Highscores extends AppCompatActivity {
 
+    final private String[] states = {"sound", "vibration", "visual", "movement"};
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_highscores);
 
-        getScores("sound");
-        getScores("vibration");
-        getScores("visual");
-        getScores("movement");
+        for (String state : states) {
+            getScores(state);
+        }
     }
 
     private void getScores(String state){
-        //SharedPreferences sharedPreferences = getPreferences(MODE_PRIVATE);
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         TextView scoreTextView;
@@ -43,9 +41,7 @@ public class Highscores extends AppCompatActivity {
         } else{
             scoreTextView = findViewById(R.id.moveScores);
         }
-        System.out.println("getting set of " + state);
         Set<String> set = sharedPreferences.getStringSet(state, new HashSet<String>());
-        System.out.println("set: " + set.toString());
 
         List<String> list = new ArrayList<>(set);
         List<Integer> intList = new ArrayList<>();
@@ -56,9 +52,12 @@ public class Highscores extends AppCompatActivity {
 
         int counter = 1;
         scoreTextView.setText("");
-        for(int score : intList){
-            scoreTextView.setText(scoreTextView.getText() + "  " + Integer.toString(counter) + ": "
-            + Integer.toString(score) + " ms\n");
+        for (int score : intList){
+            scoreTextView.setText(
+                scoreTextView.getText() + "  " +
+                Integer.toString(counter) + ": " +
+                Integer.toString(score) + " ms\n"
+            );
             counter++;
             if (counter >= 21){break;}
         }

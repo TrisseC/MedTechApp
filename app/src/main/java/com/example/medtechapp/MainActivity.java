@@ -1,7 +1,6 @@
 package com.example.medtechapp;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
 import android.media.MediaPlayer;
@@ -54,7 +53,6 @@ public class MainActivity extends AppCompatActivity {
         clickSound.start();
     }
 
-    //spela ljud på "back"
     @Override
     public void onBackPressed() {
         super.onBackPressed();

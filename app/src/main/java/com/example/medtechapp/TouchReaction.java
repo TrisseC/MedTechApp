@@ -133,7 +133,6 @@ public class TouchReaction extends AppCompatActivity {
         progressNumber.setText(reactionTimes.size() + "/" + rounds);
     }
 
-
     /**
      * Called whenever the user presses the screen
      * If a test is active it will stop the test and register the time

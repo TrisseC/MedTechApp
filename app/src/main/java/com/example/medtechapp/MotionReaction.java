@@ -17,8 +17,6 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Random;
@@ -69,6 +67,18 @@ public class MotionReaction extends AppCompatActivity implements SensorEventList
         progressNumber.setText(0 + "/" + rounds);
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        handler.removeCallbacksAndMessages(null);
+        MediaPlayer backSound = MediaPlayer.create(this, R.raw.back);
+        backSound.start();
+    }
+
+    /**
+     * Called whenever the user presses the "Fortsätt" or "Starta testet" button.
+     * Will clear the screen and call the startTest
+     */
     public void startButton(View view) {
         final MediaPlayer tapSound = MediaPlayer.create(this, R.raw.go);
         tapSound.start();
@@ -79,6 +89,9 @@ public class MotionReaction extends AppCompatActivity implements SensorEventList
         startTest();
     }
 
+    /**
+     * Prepares the phone for the test
+     */
     public void startTest(){
         paused = false;
         hasCalled = false;
@@ -87,6 +100,10 @@ public class MotionReaction extends AppCompatActivity implements SensorEventList
         handler.postDelayed(() -> callBack(), timer);
     }
 
+    /**
+     * Called within a random time interval after startTest.
+     * Displays an arrow on the screen and starts the time keeping
+     */
     public void callBack(){
         if (distance(currentRotation, startRotation) > 10) {
             startRotation = currentRotation;
@@ -106,37 +123,9 @@ public class MotionReaction extends AppCompatActivity implements SensorEventList
         startTime = System.currentTimeMillis();
     }
 
-    protected void onResume() {
-        super.onResume();
-        sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION), SensorManager.SENSOR_DELAY_UI);
-    }
-
-    protected void onPause() {
-        super.onPause();
-        sensorManager.unregisterListener(this);
-    }
-
-    public void onAccuracyChanged(Sensor sensor, int accuracy) {  }
-
-    public void onSensorChanged(SensorEvent event) {
-        currentRotation = event.values[0];
-
-        if (paused || !hasCalled) {
-            return;
-        }
-
-        float frontTilt = event.values[1];
-        float sideTilt = event.values[2];
-        if (frontTilt > 5 || frontTilt < -105 || sideTilt > 50 || sideTilt < -50) {
-            wrongRotation();
-            return;
-        }
-
-        if (distance(currentRotation, endRotation) < 20) {
-            movementCompleted();
-        }
-    }
-
+    /**
+     * Updates the progress bar at the bottom of the screen
+     */
     public void updateProgress(){
         ProgressBar progressBar = findViewById(R.id.progressBar);
         progressBar.setProgress((100/rounds)*(reactionTimes.size()));
@@ -144,6 +133,10 @@ public class MotionReaction extends AppCompatActivity implements SensorEventList
         progressNumber.setText(reactionTimes.size() + "/" + rounds);
     }
 
+    /**
+     * Called when the user moves the phone to the correct rotation
+     * This function will stop the test and register the time
+     */
     public void movementCompleted() {
         interrupt();
         root.setBackgroundColor(ContextCompat.getColor(this, android.R.color.holo_green_dark));
@@ -167,6 +160,10 @@ public class MotionReaction extends AppCompatActivity implements SensorEventList
         }
     }
 
+    /**
+     * After the test has been completed a number of times equal to the rounds value this function is called
+     * The function will end the test and calculate the average time.
+     */
     private void endTest() {
         clearContent();
         long averageReactionTime = 0;
@@ -186,6 +183,10 @@ public class MotionReaction extends AppCompatActivity implements SensorEventList
         saveScore(averageReactionTime);
     }
 
+    /**
+     * Saves the average score as a shared preference
+     * @param score
+     */
     private void saveScore(long score){
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -196,15 +197,22 @@ public class MotionReaction extends AppCompatActivity implements SensorEventList
         editor.apply();
     }
 
+    /**
+     * Called whenever the user holds the phone incorrectly
+     * Will stop the test
+     */
     public void wrongRotation() {
         interrupt();
         findViewById(R.id.continueBtn3).setVisibility(View.VISIBLE);
-        TextView instruction = ((TextView) findViewById(R.id.instructionText2));
+        TextView instruction = findViewById(R.id.instructionText2);
         instruction.setVisibility(View.VISIBLE);
         instruction.setText("Var god och håll telefonen upprätt!");
         root.setBackgroundColor(ContextCompat.getColor(this, android.R.color.darker_gray));
     }
 
+    /**
+     * Stops the test
+     */
     private void interrupt() {
         vibrator.vibrate(200);
         handler.removeCallbacksAndMessages(null);
@@ -213,6 +221,9 @@ public class MotionReaction extends AppCompatActivity implements SensorEventList
         hasCalled = false;
     }
 
+    /**
+     * Sets some views to invisible
+     */
     private void clearContent(){
         findViewById(R.id.continueBtn3).setVisibility(View.INVISIBLE);
         findViewById(R.id.instructionText2).setVisibility(View.INVISIBLE);
@@ -220,19 +231,23 @@ public class MotionReaction extends AppCompatActivity implements SensorEventList
         findViewById(R.id.timer2).setVisibility(View.INVISIBLE);
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        handler.removeCallbacksAndMessages(null);
-        MediaPlayer backSound = MediaPlayer.create(this, R.raw.back);
-        backSound.start();
-    }
-
+    /**
+     * Calculates the distance between two rotational degrees
+     * @param a
+     * @param b
+     * @return distance
+     */
     private float distance(float a, float b) {
         float distance = Math.abs(modulo(a,360) - modulo(b,360));
         return Math.min(distance, 360-distance);
     }
 
+    /**
+     * Calculates the modulo x of y (works on negative numbers compared to the % operation)
+     * @param x
+     * @param y
+     * @return modulo
+     */
     private float modulo(float x, float y) {
         float xPrime = x;
         while(xPrime<0) {
@@ -241,4 +256,42 @@ public class MotionReaction extends AppCompatActivity implements SensorEventList
         return xPrime % y;
     }
 
+    /*************************/
+    /**** SENSOR FUNCTIONS ***/
+    /*************************/
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        currentRotation = event.values[0];
+
+        if (paused || !hasCalled) {
+            return;
+        }
+
+        float frontTilt = event.values[1];
+        float sideTilt = event.values[2];
+        if (frontTilt > 5 || frontTilt < -105 || sideTilt > 50 || sideTilt < -50) {
+            wrongRotation();
+            return;
+        }
+
+        if (distance(currentRotation, endRotation) < 20) {
+            movementCompleted();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION), SensorManager.SENSOR_DELAY_UI);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        sensorManager.unregisterListener(this);
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {  }
 }
