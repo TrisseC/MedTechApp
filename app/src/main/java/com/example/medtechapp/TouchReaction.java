@@ -152,8 +152,7 @@ public class TouchReaction extends AppCompatActivity {
 
         TextView instructions = findViewById(R.id.instructionText);
         instructions.setVisibility(View.VISIBLE);
-        instructions.setText("Bra jobbat!\nKlicka på tillbakapilen längst ner till höger för att gå till menyn");
-
+        instructions.setText("Bra jobbat!\nKlicka på pilen längst ner för att gå tillbaka till menyn");
 
         TextView timerTV = findViewById(R.id.timer);
         timerTV.setVisibility(View.VISIBLE);

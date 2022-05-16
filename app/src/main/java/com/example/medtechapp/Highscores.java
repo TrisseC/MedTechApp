@@ -29,7 +29,6 @@ public class Highscores extends AppCompatActivity {
         getScores("movement");
     }
 
-
     private void getScores(String state){
         //SharedPreferences sharedPreferences = getPreferences(MODE_PRIVATE);
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
