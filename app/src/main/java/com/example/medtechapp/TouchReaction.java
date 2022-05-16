@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
 import android.text.Html;
 import android.util.Log;
 import android.view.View;
@@ -75,7 +76,7 @@ public class TouchReaction extends AppCompatActivity {
         clearContent();
         if (state.equals("sound")) {
             root.setBackgroundColor(ContextCompat.getColor(this, android.R.color.holo_blue_dark));
-            mediaPlayer = MediaPlayer.create(this, R.raw.notice);
+            mediaPlayer = MediaPlayer.create(this, R.raw.ljud);
             mediaPlayer.setVolume(1,1);
         } else if (state.equals("vibration")) {
             root.setBackgroundColor(ContextCompat.getColor(this, android.R.color.holo_blue_dark));
